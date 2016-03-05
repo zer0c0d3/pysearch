@@ -1,0 +1,53 @@
+#!/usr/bin/env python
+import os,sys
+r_args=['-p','-s','-o','-help']
+for arg in range(0,len(sys.argv)):
+  if arg!=0:
+    if "-" in sys.argv[arg] and sys.argv[arg] not in r_args:
+      print "Bad Args Dude !!!"
+      print "run 'searchpy -help' in terminal ..."
+      break
+    if sys.argv[arg-1]=="-p" and os.path.isdir(sys.argv[arg]):
+     path=sys.argv[arg] 
+    if sys.argv[arg-1]=="-s":
+      search=sys.argv[arg]
+    if sys.argv[arg-1]=="-o":
+      output=sys.argv[arg]   
+    if sys.argv[arg]=="-help":
+      help='help'
+      print "\n Full Example With Output:\n"    
+      print (" "*3)+" searchpy -p [path for scan] -s [word to find] -o [outputfile]"
+      print "\n Example Without Output(only print):\n"
+      print (" "*3)+" searchpy -p [path for scan] -s [word to find]\n" 
+if 'path' not in locals() and 'help' not in locals():
+  print "Please give an existed path (!)"
+  print "Example: 'searchpy -p /home' "
+if 'search' not in locals() and 'help' not in locals():
+  print "Please give a word to detect it in path (!)"
+  print "Example: 'searchpy -p /home -s word' "
+if 'path' in locals() and 'search' in locals() and 'help' not in locals():
+  if 'output' in locals():
+    data=""
+  os.system("ls -R "+path+" > paths")
+  with open("paths","r") as p:
+    for line in p:
+      line= line.rstrip("\n")
+      if ":" in line:
+        fpath=line.replace(":","/")
+      if search in line:
+        print fpath+line
+        if 'output' in locals():
+          data+=fpath+line+"\n"
+  os.system("rm paths")
+  if 'output' in locals():
+    if data=="":
+      print "0 Search Results (!)"
+    else:
+      try:
+        file=open(output,"w")
+        file.write(data)
+        file.close()
+      except:
+        print "Please give an existed path for output (!)"
+        print "Example: searchpy -p /home -s index.php -o /home/outputfile.txt"
+        pass
