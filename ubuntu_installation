@@ -1,0 +1,8 @@
+
+#installation
+
+sudo su
+apt-get install git
+git clone https://github.com/zer0c0d3/searchpy.git
+cp searchpy/searchpy /usr/bin/seachpy
+chmod +x /usr/bin/searchpy
