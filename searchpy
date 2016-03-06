@@ -35,7 +35,10 @@ if 'path' in locals() and 'search' in locals() and 'help' not in locals():
       if ":" in line:
         fpath=line.replace(":","/")
       if search in line:
-        print fpath+line
+        if fpath == line.replace(":","/")
+          print fpath
+        else:
+          print fpath+line
         if 'output' in locals():
           data+=fpath+line+"\n"
   os.system("rm paths")
